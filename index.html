@@ -1,179 +1,634 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Kamala Saraswathi K | Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kamala Saraswathi K — Portfolio</title>
+<style>
+  :root{
+    --cream:#f1ead9;
+    --cream-deep:#e7ddc6;
+    --lavender:#aab4de;
+    --lavender-deep:#8590c6;
+    --lavender-pale:#c9d0ec;
+    --sky:#bcd8e6;
+    --navy:#22253a;
+    --white:#fbf8f2;
+    --line:#22253a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--navy);
+    font-family:'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--lavender); color:var(--navy);}
+  a{color:inherit; text-decoration:none;}
 
-<link rel="stylesheet" href="style.css">
+  /* ---------- reveal on scroll ---------- */
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.show{opacity:1; transform:translateY(0);}
 
-<!-- Fonts -->
+  /* ---------- window frame (browser-style card) ---------- */
+  .win{
+    background:var(--white);
+    border:2px solid var(--navy);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:5px 5px 0 var(--navy);
+  }
+  .win-bar{
+    background:var(--navy);
+    display:flex; align-items:center; gap:6px;
+    padding:8px 12px;
+  }
+  .win-bar .dot{width:9px; height:9px; border-radius:50%; background:#8a8f9e;}
+  .win-bar .dot:nth-child(1){background:#e35b5b;}
+  .win-bar .dot:nth-child(2){background:#e3c95b;}
+  .win-bar .dot:nth-child(3){background:#5be38a;}
+  .win-bar .title{
+    margin-left:10px; color:#cfd3e6; font-size:11px; letter-spacing:1px; font-family:'Courier New',monospace;
+  }
+  .win-body{padding:18px 20px;}
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  /* ---------- nav ---------- */
+  .nav{
+    position:sticky; top:0; z-index:100;
+    background:var(--white);
+    border-bottom:2px solid var(--navy);
+    display:flex; gap:0; overflow-x:auto;
+  }
+  .nav a{
+    padding:14px 18px; font-size:12px; letter-spacing:1.5px; font-weight:600;
+    white-space:nowrap; color:var(--navy); text-transform:uppercase;
+    border-right:1px solid #ddd;
+  }
+  .nav a:hover{background:var(--lavender); color:var(--white);}
 
-<!-- AOS (scroll animation) -->
+  /* ---------- hero ---------- */
+  .hero{
+    background:linear-gradient(180deg, var(--sky) 0%, var(--lavender) 100%);
+    padding:70px 8vw 60px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:30px;
+    border-bottom:3px solid var(--navy);
+  }
+  .hero-left h1{
+    font-size:56px; font-weight:300; line-height:1.05; color:var(--navy);
+  }
+  .hero-left h1 b{
+    font-weight:800;
+    background:var(--white);
+    padding:2px 18px;
+    border-radius:40px;
+    display:inline-block;
+    margin-top:6px;
+    border:2px solid var(--navy);
+  }
+  .hero-left .role{
+    margin-top:18px; font-size:20px; font-weight:700; color:var(--navy);
+  }
+  .hero-left .tagline{
+    margin-top:8px; font-size:14px; color:#3a3d55; max-width:420px;
+  }
+  .hero-tags{margin-top:22px; display:flex; gap:10px; flex-wrap:wrap;}
+  .hero-tags span{
+    background:var(--navy); color:var(--white); font-size:11px; padding:6px 12px;
+    border-radius:20px; letter-spacing:1px;
+  }
+  .hero-right{
+    width:320px; max-width:100%;
+  }
+  .hero-right .win-body{
+    font-family:'Courier New',monospace; font-size:13px; line-height:1.8;
+  }
+  .hero-right .win-body b{color:var(--lavender-deep);}
 
-<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  /* ---------- section shell ---------- */
+  section{padding:70px 8vw;}
+  .section-tag{
+    display:inline-block; background:var(--lavender); color:var(--white);
+    padding:5px 16px; border-radius:20px; font-size:12px; font-weight:700; letter-spacing:1px;
+    margin-bottom:10px;
+  }
+  h2.section-title{
+    font-size:38px; font-weight:300; margin-bottom:8px;
+  }
+  h2.section-title b{font-weight:800;}
+  .section-sub{color:#555; font-size:14px; margin-bottom:36px; max-width:520px;}
 
+  /* ---------- profile / about ---------- */
+  .about-grid{
+    display:grid; grid-template-columns:1fr 1.2fr; gap:40px; align-items:center;
+  }
+  @media(max-width:800px){.about-grid{grid-template-columns:1fr;}}
+  .about-card p{margin-bottom:14px; line-height:1.7; font-size:14.5px;}
+  .about-card b{color:var(--lavender-deep);}
+
+  .stat-row{display:flex; gap:16px; flex-wrap:wrap; margin-top:22px;}
+  .stat-box{
+    background:var(--cream-deep); border:2px solid var(--navy); border-radius:10px;
+    padding:14px 18px; min-width:110px; text-align:center;
+  }
+  .stat-box .num{font-size:26px; font-weight:800; color:var(--lavender-deep);}
+  .stat-box .lab{font-size:10px; letter-spacing:1px; margin-top:4px; text-transform:uppercase;}
+
+  /* ---------- generic list card (for internships/education) ---------- */
+  .card{
+    background:var(--white); border:2px solid var(--navy); border-radius:12px;
+    padding:22px 24px; margin-bottom:18px; box-shadow:5px 5px 0 var(--lavender);
+  }
+  .card h3{font-size:17px; font-weight:800;}
+  .card .org{font-size:13px; color:#555; margin-top:2px; font-weight:600;}
+  .card .date{
+    display:inline-block; background:var(--navy); color:var(--white);
+    font-size:11px; padding:4px 10px; border-radius:14px; margin-top:8px; letter-spacing:.5px;
+  }
+  .card ul{margin-top:12px; padding-left:20px;}
+  .card li{margin-bottom:7px; font-size:13.5px; line-height:1.55;}
+
+  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  @media(max-width:760px){.grid-2{grid-template-columns:1fr;}}
+
+  /* ---------- carousel (projects / mini projects) ---------- */
+  .carousel-wrap{position:relative;}
+  .carousel{
+    display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory;
+    padding:6px 4px 20px; scrollbar-width:none;
+  }
+  .carousel::-webkit-scrollbar{display:none;}
+  .slide{
+    flex:0 0 300px; scroll-snap-align:start;
+  }
+  .slide .win-body{min-height:150px;}
+  .slide h4{font-size:15px; font-weight:800; margin-bottom:6px;}
+  .slide p{font-size:13px; line-height:1.55; color:#333;}
+  .slide .status{
+    display:inline-block; margin-top:10px; font-size:10px; padding:4px 10px;
+    background:var(--lavender); color:var(--white); border-radius:14px; letter-spacing:1px; font-weight:700;
+  }
+  .carousel-btns{
+    display:flex; gap:10px; justify-content:flex-end; margin-top:6px;
+  }
+  .carousel-btns button{
+    width:38px; height:38px; border-radius:50%; border:2px solid var(--navy);
+    background:var(--white); font-size:16px; cursor:pointer; font-weight:800;
+  }
+  .carousel-btns button:hover{background:var(--navy); color:var(--white);}
+
+  /* ---------- skills as "clients_&_brands.txt" style ---------- */
+  .skills-panel{
+    background:var(--lavender); border:2px solid var(--navy); border-radius:14px;
+    padding:26px 28px; color:var(--white);
+  }
+  .skills-panel .filetag{
+    display:inline-block; background:var(--navy); color:var(--white); font-family:'Courier New',monospace;
+    padding:6px 14px; border-radius:6px; font-size:13px; font-weight:700; margin-bottom:18px;
+  }
+  .skill-group{margin-bottom:16px;}
+  .skill-group h4{font-size:11px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; opacity:.85;}
+  .badges{display:flex; flex-wrap:wrap; gap:8px;}
+  .badge{
+    background:var(--white); color:var(--navy); font-size:12px; font-weight:700;
+    padding:7px 14px; border-radius:20px; border:2px solid var(--navy);
+  }
+
+  /* ---------- courses / achievements sticky-note style ---------- */
+  .note-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:18px;}
+  .note{
+    background:var(--white); border:2px solid var(--navy); border-radius:10px;
+    padding:16px 18px; position:relative; transform:rotate(-1deg);
+  }
+  .note:nth-child(even){transform:rotate(1deg);}
+  .note .stars{color:var(--lavender-deep); font-size:13px; margin-bottom:8px;}
+  .note p{font-size:13px; line-height:1.5;}
+  .note b{color:var(--lavender-deep);}
+
+  /* ---------- leadership timeline ---------- */
+  .timeline{border-left:3px solid var(--navy); padding-left:26px; margin-left:8px;}
+  .t-item{margin-bottom:24px; position:relative;}
+  .t-item::before{
+    content:""; position:absolute; left:-33px; top:4px; width:13px; height:13px;
+    background:var(--lavender); border:2px solid var(--navy); border-radius:50%;
+  }
+  .t-item h4{font-size:14.5px; font-weight:800;}
+  .t-item .role-date{font-size:11px; color:#666; margin-top:2px; letter-spacing:.5px; font-weight:600;}
+
+  /* ---------- languages / hobbies pill strip ---------- */
+  .pill-strip{display:flex; flex-wrap:wrap; gap:12px;}
+  .pill{
+    background:var(--white); border:2px solid var(--navy); border-radius:20px;
+    padding:9px 18px; font-size:13px; font-weight:700;
+  }
+  .pill b{color:var(--lavender-deep);}
+
+  /* ---------- footer / connect ---------- */
+  .footer{
+    background:var(--navy); color:var(--white); padding:60px 8vw 40px; text-align:center;
+  }
+  .footer h2{font-size:34px; font-weight:300; margin-bottom:8px;}
+  .footer h2 b{font-weight:800; color:var(--lavender-pale);}
+  .footer .contact-row{
+    display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-top:26px; font-size:14px;
+  }
+  .footer .contact-row div{
+    border:1px solid #4a4e68; padding:8px 16px; border-radius:20px;
+  }
+  .footer .bottom-line{
+    margin-top:40px; font-size:11px; letter-spacing:2px; color:#7d81a0;
+  }
+
+  /* floating badges deco (no photos, just shapes/icons) */
+  .deco-shape{
+    width:70px; height:70px; border-radius:50%; border:3px solid var(--navy);
+    background:var(--sky); display:flex; align-items:center; justify-content:center;
+    font-size:24px; flex-shrink:0;
+  }
+</style>
 </head>
-
 <body>
 
+<nav class="nav">
+  <a href="#profile">Profile</a>
+  <a href="#internships">Internships</a>
+  <a href="#education">Education</a>
+  <a href="#projects">Projects</a>
+  <a href="#mini-projects">Mini Projects</a>
+  <a href="#achievements">Achievements</a>
+  <a href="#skills">Skills</a>
+  <a href="#courses">Courses</a>
+  <a href="#leadership">Leadership</a>
+  <a href="#languages">Languages</a>
+  <a href="#hobbies">Hobbies</a>
+  <a href="#connect">Connect</a>
+</nav>
+
 <!-- HERO -->
-
-<section class="hero">
-<h1>KAMALA SARASWATHI K</h1>
-<h2><span id="typing"></span></h2>
-
-<div class="contact">
-<p>Puthur, Mappedu, Chennai | +91 90424 30454</p>
-<p>kamalask10c@gmail.com</p>
-<p>
-<a href="https://linkedin.com/in/kamala-saraswathi-k-606942287" target="_blank">LinkedIn</a> |
-<a href="https://kamalasaraswathik.github.io/Portfolio/" target="_blank">Portfolio</a>
-</p>
+<div class="hero reveal" id="profile">
+  <div class="hero-left">
+    <h1>Kamala<br><b>Saraswathi K</b></h1>
+    <div class="role">Electronics &amp; Instrumentation Engineer</div>
+    <div class="tagline">B.E. student at Madras Institute of Technology, Anna University — building
+    systems across embedded hardware, automation, and instrumentation.</div>
+    <div class="hero-tags">
+      <span>Instrumentation</span>
+      <span>Embedded Systems</span>
+      <span>Automation</span>
+      <span>Computer Vision</span>
+    </div>
+  </div>
+  <div class="hero-right win">
+    <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">core_profile.txt</span></div>
+    <div class="win-body">
+      <b>>> student</b> — MIT, Anna University<br>
+      <b>>> branch</b> — Electronics &amp; Instrumentation<br>
+      <b>>> cgpa</b> — 8.48 / 10<br>
+      <b>>> location</b> — Puthur, Mappedu, Chennai<br>
+      <b>>> status</b> — open to internships &amp; research
+    </div>
+  </div>
 </div>
+
+<!-- ABOUT / PROFILE -->
+<section class="reveal">
+  <div class="section-tag">about_me</div>
+  <h2 class="section-title">Who <b>I Am</b></h2>
+  <div class="about-grid">
+    <div class="about-card win">
+      <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">profile.txt</span></div>
+      <div class="win-body">
+        <p>Enthusiastic and detail-oriented <b>Electronics and Instrumentation Engineering</b> student at
+        Madras Institute of Technology, Anna University. Highly motivated to innovate, learn, and apply
+        engineering principles toward solving real-world challenges.</p>
+        <p>Demonstrates strong <b>leadership</b>, <b>communication</b>, and <b>teamwork</b> skills through active
+        involvement in student organizations and technical events. Passionate about instrumentation systems,
+        automation, and creative problem-solving.</p>
+      </div>
+    </div>
+    <div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="num">8.48</div><div class="lab">CGPA</div></div>
+        <div class="stat-box"><div class="num">3</div><div class="lab">Internships</div></div>
+        <div class="stat-box"><div class="num">10</div><div class="lab">Projects</div></div>
+        <div class="stat-box"><div class="num">5</div><div class="lab">Leadership Roles</div></div>
+        <div class="stat-box"><div class="num">4</div><div class="lab">Languages</div></div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- PROFILE -->
+<!-- INTERNSHIPS -->
+<section class="reveal" id="internships" style="background:var(--cream-deep);">
+  <div class="section-tag">mission_log</div>
+  <h2 class="section-title">Internship <b>Experience</b></h2>
+  <div class="section-sub">Hands-on roles across research, embedded systems, and industrial process operations.</div>
 
-<section class="glass" data-aos="fade-up">
-<h2>PROFILE</h2>
-<p>Enthusiastic and detail-oriented Electronics and Instrumentation Engineering student at Madras Institute of Technology, Anna University. Highly motivated to innovate, learn, and apply engineering principles toward solving real-world challenges. Demonstrates strong leadership, communication, and teamwork skills through active involvement in student organizations and technical events. Passionate about instrumentation systems, automation, and creative problem-solving.</p>
+  <div class="card">
+    <h3>Research Intern</h3>
+    <div class="org">Indian Institute of Technology, Madras</div>
+    <span class="date">May 2026 – Jun 2026</span>
+    <ul>
+      <li>Contributed to Phase 1 of the project on 'AI-powered serial number recognition and counterfeit detection of Indian currency using multi-spectral imaging and bunch value machines'.</li>
+      <li>Dismantled and studied sensor architecture and operating mechanisms of an existing banknote validator machine.</li>
+      <li>Built a machine learning model for counterfeit detection using Indian rupee note datasets captured under UV illumination.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Embedded Systems Intern</h3>
+    <div class="org">Emertxe</div>
+    <span class="date">Dec 2025 – Jan 2026</span>
+    <ul>
+      <li>Completed an online embedded systems internship focused on PIC microcontroller programming and simulation.</li>
+      <li>Designed and simulated a microwave oven control system on PIC microcontroller using PICSimLab.</li>
+      <li>Implemented embedded logic for timer control, power modes, and user interface functions.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Student Intern</h3>
+    <div class="org">Lube Blending Plant, Indian Oil Corporation Ltd, Chennai</div>
+    <span class="date">Jun 2025</span>
+    <ul>
+      <li>Completed a plant immersion internship covering process operations and quality control laboratories at IOCL's Lube Blending Plant.</li>
+      <li>Studied end-to-end lubricant blending processes, plant machinery, and lab testing procedures.</li>
+      <li>Compiled and submitted a consolidated technical report documenting plant operations and lab observations.</li>
+    </ul>
+  </div>
 </section>
 
 <!-- EDUCATION -->
-
-<section class="glass" data-aos="fade-up">
-<h2>EDUCATION</h2>
-
-<div class="card" data-aos="zoom-in">
-<h3>B.E Electronics and Instrumentation</h3>
-<p>MIT, Anna University (2023–2027)</p>
-<p>CGPA: 8.50</p>
-</div>
-
-<div class="card" data-aos="zoom-in">
-<h3>Higher Secondary</h3>
-<p>95.3% | 97.5%</p>
-<p>Zion School</p>
-</div>
-
+<section class="reveal" id="education">
+  <div class="section-tag">select_your_grade</div>
+  <h2 class="section-title"><b>Education</b></h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Bachelor of Engineering (B.E.)</h3>
+      <div class="org">Electronics and Instrumentation</div>
+      <div class="org">Madras Institute of Technology, Anna University</div>
+      <span class="date">2023 – 2027</span>
+      <div style="margin-top:10px;"><span class="pill">CGPA <b>8.48</b></span></div>
+    </div>
+    <div class="card">
+      <h3>Higher Secondary Education</h3>
+      <div class="org">Zion Matriculation Higher Secondary School, Selaiyur, Chennai</div>
+      <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+        <span class="pill">Grade 12 <b>95.3%</b></span>
+        <span class="pill">Grade 11 <b>97.5%</b></span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- PROJECTS -->
+<!-- PROJECTS CAROUSEL -->
+<section class="reveal" id="projects" style="background:var(--cream-deep);">
+  <div class="section-tag">case_files</div>
+  <h2 class="section-title"><b>Projects</b></h2>
+  <div class="section-sub">Slide through — capstone and research-driven builds across embedded systems, control, and connectivity.</div>
+  <div class="carousel-wrap">
+    <div class="carousel" id="carousel-projects">
+      <div class="slide win">
+        <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">01_capstone</span></div>
+        <div class="win-body">
+          <h4>Smart Lane Clearance System for Emergency Vehicles</h4>
+          <p>Designing a road-embedded LED-based system to improve approaching emergency vehicle indication and lane clearance response.</p>
+          <span class="status">Ongoing · Capstone</span>
+        </div>
+      </div>
+      <div class="slide win">
+        <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">02_apmc</span></div>
+        <div class="win-body">
+          <h4>Real-Time Queue Management &amp; Market Intelligence System</h4>
+          <p>Building a system to enhance operational efficiency in APMC markets through real-time queue tracking and market intelligence.</p>
+          <span class="status">Ongoing</span>
+        </div>
+      </div>
+      <div class="slide win">
+        <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">03_sil</span></div>
+        <div class="win-body">
+          <h4>Software-in-the-Loop (SiL) Test Platform</h4>
+          <p>Developed a SiL platform for algorithm validation, improving system reliability and accelerating verification cycles.</p>
+          <span class="status">Completed</span>
+        </div>
+      </div>
+      <div class="slide win">
+        <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">04_pid</span></div>
+        <div class="win-body">
+          <h4>PID-Controlled Real-Time Color Detection &amp; Tracking</h4>
+          <p>Built an Arduino–ESP32 based system for real-time color detection with servo-based frame centering.</p>
+          <span class="status">Completed</span>
+        </div>
+      </div>
+      <div class="slide win">
+        <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">05_lora</span></div>
+        <div class="win-body">
+          <h4>LoRa-Based Sensor Data Transmission using STM32</h4>
+          <p>Interfaced STM32 with LoRa modules for wireless sensor data (from DHT11 and HCSR04) transmission.</p>
+          <span class="status">Completed</span>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-btns">
+      <button onclick="scrollCarousel('carousel-projects',-1)">←</button>
+      <button onclick="scrollCarousel('carousel-projects',1)">→</button>
+    </div>
+  </div>
+</section>
 
-<section class="glass" data-aos="fade-up">
-<h2>PROJECTS</h2>
-
-<div class="grid">
-
-<div class="card hover" data-aos="flip-left">
-<p>PID-controlled Arduino–ESP32 system for real-time color detection and servo-based frame centering</p>
-</div>
-
-<div class="card hover" data-aos="flip-left">
-<p>Sensor data transmission using LoRa interfaced with STM32</p>
-</div>
-
-<div class="card hover" data-aos="flip-left">
-<p>Morse code translator simulation using signals and systems concept in MATLAB</p>
-</div>
-
-<div class="card hover" data-aos="flip-left">
-<p>Metal detector circuit for ferromagnetic differentiation using inductance variation</p>
-</div>
-
-<div class="card hover" data-aos="flip-left">
-<p>Real-Time Queue Management for APMC Markets (Ongoing)</p>
-</div>
-
-<div class="card hover" data-aos="flip-left">
-<p>Smart Lane Clearance system for Emergency Vehicles (Ongoing)</p>
-</div>
-
-</div>
+<!-- MINI PROJECTS CAROUSEL -->
+<section class="reveal" id="mini-projects">
+  <div class="section-tag">quick_builds</div>
+  <h2 class="section-title"><b>Mini Projects</b></h2>
+  <div class="section-sub">Smaller simulations and circuit builds exploring core concepts hands-on.</div>
+  <div class="carousel-wrap">
+    <div class="carousel" id="carousel-mini">
+      <div class="slide win">
+        <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">microwave.sim</span></div>
+        <div class="win-body"><h4>Microwave Oven Simulation</h4><p>Simulated microwave oven functionality using PICSimLab software.</p></div>
+      </div>
+      <div class="slide win">
+        <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">morse.m</span></div>
+        <div class="win-body"><h4>Morse Code Translator</h4><p>Simulated a Morse code translator applying signals and systems concepts in MATLAB.</p></div>
+      </div>
+      <div class="slide win">
+        <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">fpga.vhd</span></div>
+        <div class="win-body"><h4>4-Bit Comparator &amp; 2-Digit BCD Decade Counter (FPGA)</h4><p>Implemented using VHDL on a Xilinx Spartan-6 FPGA.</p></div>
+      </div>
+      <div class="slide win">
+        <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">metal_detect.cct</span></div>
+        <div class="win-body"><h4>Metal Detector Circuit</h4><p>Designed a circuit using 555 Timer IC to differentiate ferromagnetic and non-ferromagnetic metals using variable inductance principles.</p></div>
+      </div>
+      <div class="slide win">
+        <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">parking.tkc</span></div>
+        <div class="win-body"><h4>Smart Parking Assistant</h4><p>Simulated an Arduino-based smart parking system using TinkerCAD.</p></div>
+      </div>
+    </div>
+    <div class="carousel-btns">
+      <button onclick="scrollCarousel('carousel-mini',-1)">←</button>
+      <button onclick="scrollCarousel('carousel-mini',1)">→</button>
+    </div>
+  </div>
 </section>
 
 <!-- ACHIEVEMENTS -->
-
-<section class="glass" data-aos="fade-right">
-<h2>ACHIEVEMENTS</h2>
-<ul>
-<li>4TH Prize – TNWISE Hackathon</li>
-<li>India Automation Games – Rank 15/100</li>
-</ul>
-</section>
-
-<!-- EXPERIENCE -->
-
-<section class="glass" data-aos="fade-left">
-<h2>EXPERIENCE</h2>
-<ul>
-<li>Emertxe Internship (Embedded Systems)</li>
-<li>IOCL Internship – Lube Plant</li>
-<li>Editorial Head – ISA MIT</li>
-<li>Joint Secretary – IEA</li>
-<li>Associate Head – MIT Quill</li>
-<li>TED Club Content Curator</li>
-</ul>
-</section>
-
-<!-- COURSES -->
-
-<section class="glass" data-aos="fade-up">
-<h2>COURSES</h2>
-<ul>
-<li>NPTEL Python</li>
-<li>MATLAB Onramp</li>
-<li>SolidWorks Workshop</li>
-<li>Fluxus Hackathon</li>
-</ul>
+<section class="reveal" id="achievements" style="background:var(--cream-deep);">
+  <div class="section-tag">latest_insight</div>
+  <h2 class="section-title"><b>Achievements</b></h2>
+  <div class="note-grid">
+    <div class="note"><div class="stars">★★★★☆</div><p><b>4th Prize</b> — Special mention in TNWISE (Tamil Nadu Women in Science and Engineering), a state-level TANCAM's hackathon. <i>April 2026</i></p></div>
+    <div class="note"><div class="stars">★★★★★</div><p><b>Participant</b> — India Automation Games 2025 by ISA Maharashtra Section, National-level Automation Hackathon. Ranked 15/100. <i>September 2025</i></p></div>
+    <div class="note"><div class="stars">★★★☆☆</div><p><b>3rd Runner Up</b> — GMC level Abacus Competition. <i>2016</i></p></div>
+    <div class="note"><div class="stars">★★★★☆</div><p><b>Bronze Medalist</b> — International Mathematics Olympiad (Zonal level). <i>2013</i></p></div>
+  </div>
 </section>
 
 <!-- SKILLS -->
-
-<section class="glass" data-aos="zoom-in">
-<h2>TECHNICAL SKILLS</h2>
-<p>C, Python, MATLAB, Flutter, Computer Vision, LabVIEW, PCB Design, KiCAD, Proteus, Embedded Systems</p>
+<section class="reveal" id="skills">
+  <div class="section-tag">tools_&amp;_stack</div>
+  <h2 class="section-title"><b>Technical Skills</b></h2>
+  <div class="skills-panel">
+    <div class="filetag">skills_&amp;_tools.txt</div>
+    <div class="skill-group">
+      <h4>Programming Languages</h4>
+      <div class="badges"><span class="badge">C</span><span class="badge">Python</span><span class="badge">MATLAB</span></div>
+    </div>
+    <div class="skill-group">
+      <h4>Software &amp; Simulation Tools</h4>
+      <div class="badges"><span class="badge">LabVIEW</span><span class="badge">Proteus</span><span class="badge">CODESYS</span><span class="badge">Fluid Sim</span></div>
+    </div>
+    <div class="skill-group">
+      <h4>PCB Design</h4>
+      <div class="badges"><span class="badge">KiCad</span><span class="badge">Autodesk Fusion</span></div>
+    </div>
+    <div class="skill-group">
+      <h4>App Development</h4>
+      <div class="badges"><span class="badge">Flutter (Basics)</span></div>
+    </div>
+    <div class="skill-group">
+      <h4>Specialized Domains</h4>
+      <div class="badges"><span class="badge">Computer Vision (Basics)</span><span class="badge">Embedded Systems Programming</span></div>
+    </div>
+  </div>
 </section>
 
-<section class="glass" data-aos="zoom-in">
-<h2>SOFT SKILLS</h2>
-<p>Presentation | Canva | Public Speaking | Abacus</p>
+<!-- COURSES -->
+<section class="reveal" id="courses" style="background:var(--cream-deep);">
+  <div class="section-tag">clients_&amp;_brands.txt</div>
+  <h2 class="section-title"><b>Courses</b> &amp; Certifications</h2>
+  <div class="note-grid">
+    <div class="note"><p><b>Programming and Data Structures in Python</b><br>SWAYAM/NPTEL</p></div>
+    <div class="note"><p><b>Sensor Interfacing skills, PCB design</b><br>Naan Mudhalvan</p></div>
+    <div class="note"><p><b>Siemens Center of Excellence, SDP</b><br>Hands-on Industrial Automation using Siemens PLC and HMI</p></div>
+    <div class="note"><p><b>MATLAB Onramp</b><br>MathWorks</p></div>
+    <div class="note"><p><b>SolidWorks Workshop</b><br>MIT Robotics Association</p></div>
+    <div class="note"><p><b>Fluxus: The Ultimate Coding Hackathon</b><br>Participant, IIT Indore</p></div>
+    <div class="note"><p><b>SIP Abacus Graduate</b></p></div>
+  </div>
 </section>
 
-<section class="glass" data-aos="fade-up">
-<h2>LANGUAGES</h2>
-<p>English | Tamil | Hindi | German</p>
+<!-- LEADERSHIP -->
+<section class="reveal" id="leadership">
+  <div class="section-tag">why_me</div>
+  <h2 class="section-title">Leadership &amp; <b>Extracurricular</b></h2>
+  <div class="card">
+    <div class="timeline">
+      <div class="t-item">
+        <h4>General Secretary — The MIT Quill (Official News Body and Literary Club of MIT)</h4>
+        <div class="role-date">2026 – Present</div>
+      </div>
+      <div class="t-item">
+        <h4>Editorial Head — International Society of Automation (ISA), MIT Student Chapter</h4>
+        <div class="role-date">2025 – 2026</div>
+      </div>
+      <div class="t-item">
+        <h4>Associate Head of Newsletter — The MIT Quill</h4>
+        <div class="role-date">2024 – 2025</div>
+      </div>
+      <div class="t-item">
+        <h4>Joint Secretary — Instrumentation Engineers Association (IEA)</h4>
+        <div class="role-date">2024 – 2025</div>
+      </div>
+      <div class="t-item">
+        <h4>Content Curator — TED Club, MIT</h4>
+        <div class="role-date">2023</div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="glass" data-aos="fade-up">
-<h2>HOBBIES</h2>
-<p>Reading | Doodling | Art | Blogging | Coding | Writing</p>
+<!-- LANGUAGES + HOBBIES -->
+<section class="reveal" id="languages" style="background:var(--cream-deep);">
+  <div class="grid-2">
+    <div>
+      <div class="section-tag">languages</div>
+      <h2 class="section-title" style="font-size:28px;"><b>Languages</b></h2>
+      <div class="pill-strip">
+        <span class="pill">English — <b>Fluent</b></span>
+        <span class="pill">Tamil — <b>Native</b></span>
+        <span class="pill">Hindi — <b>Basic Proficiency</b></span>
+        <span class="pill">German — <b>A1 Level (Beginner)</b></span>
+      </div>
+    </div>
+    <div id="hobbies">
+      <div class="section-tag">hobbies_&amp;_interests</div>
+      <h2 class="section-title" style="font-size:28px;"><b>Hobbies</b></h2>
+      <div class="pill-strip">
+        <span class="pill">Reading</span>
+        <span class="pill">Doodling</span>
+        <span class="pill">Arts &amp; Crafts</span>
+        <span class="pill">Blogging</span>
+        <span class="pill">Coding Challenges</span>
+        <span class="pill">Technical Writing</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<footer>
-<p>© 2026 Kamala Saraswathi K</p>
-</footer>
-
-<!-- SCRIPTS -->
-
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<!-- FOOTER / CONNECT -->
+<div class="footer reveal" id="connect">
+  <h2>connect <b>with me</b></h2>
+  <div class="contact-row">
+    <div>✉ kamalasaraswathik2606@gmail.com</div>
+    <div>☎ +91 90424 30454</div>
+    <div>📍 Puthur, Mappedu, Chennai</div>
+  </div>
+  <div class="contact-row">
+    <a href="https://linkedin.com/in/kamala-saraswathi-k-606942287" target="_blank"><div>in — linkedin.com/in/kamala-saraswathi-k-606942287</div></a>
+    <a href="https://kamalasaraswathik.github.io/Portfolio/" target="_blank"><div>▣ — kamalasaraswathik.github.io/Portfolio</div></a>
+  </div>
+  <div class="bottom-line">MADE IN CHENNAI · KAMALA SARASWATHI K · 2026</div>
+</div>
 
 <script>
-AOS.init({ duration: 1000 });
-</script>
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
 
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  // carousel scroll buttons
+  function scrollCarousel(id, dir){
+    const el = document.getElementById(id);
+    el.scrollBy({left: dir * 320, behavior:'smooth'});
+  }
 
-<script>
-new Typed("#typing", {
-strings: ["Electronics Engineer", "Embedded Developer", "IoT Enthusiast"],
-typeSpeed: 50,
-backSpeed: 30,
-loop: true
-});
+  // autoplay for carousels
+  function autoSlide(id){
+    const el = document.getElementById(id);
+    setInterval(()=>{
+      if(el.scrollLeft + el.clientWidth >= el.scrollWidth - 5){
+        el.scrollTo({left:0, behavior:'smooth'});
+      } else {
+        el.scrollBy({left:320, behavior:'smooth'});
+      }
+    }, 3500);
+  }
+  autoSlide('carousel-projects');
+  autoSlide('carousel-mini');
 </script>
 
 </body>
